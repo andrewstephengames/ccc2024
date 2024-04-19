@@ -9,12 +9,12 @@ struct Vec2 {
 } pos;
 
 int N;
-char **mat, **clone;
+char **mat, **cl;
 string path;
 bool exista = true;
 
-ifstream in ("level3_example.in");
-ofstream out ("output3");
+ifstream in ("level3_1.in");
+ofstream out ("output3_1");
 
 bool giveRoad(int x, int y, int width, int height) {
     pos.x = x;
@@ -23,18 +23,18 @@ bool giveRoad(int x, int y, int width, int height) {
     for (int i = 0; i < path.length(); ++i) {
         char current = path.at(i);
 
-        clone[pos.x][pos.y] = 'P';
+        cl[pos.x][pos.y] = 'P';
 
         switch (current) {
             case 'W':
-                if (pos.x - 1 < 0 || clone[pos.x-1][pos.y] == 'X' || clone[pos.x-1][pos.y] == 'P') {
+                if (pos.x - 1 < 0 || cl[pos.x-1][pos.y] == 'X' || cl[pos.x-1][pos.y] == 'P') {
                     return false;
                 } else {
                     pos.x--;
                 }
                 break;
             case 'D':
-                if (pos.y + 1 >= width || clone[pos.x][pos.y+1] == 'X' || clone[pos.x][pos.y+1] == 'P') {
+                if (pos.y + 1 >= width || cl[pos.x][pos.y+1] == 'X' || cl[pos.x][pos.y+1] == 'P') {
 
                     return false;
                 } else {
@@ -42,7 +42,7 @@ bool giveRoad(int x, int y, int width, int height) {
                 }
                 break;
             case 'S':
-                if (pos.x + 1 >= height || clone[pos.x+1][pos.y] == 'X' || clone[pos.x+1][pos.y] == 'P') {
+                if (pos.x + 1 >= height || cl[pos.x+1][pos.y] == 'X' || cl[pos.x+1][pos.y] == 'P') {
 
                     return false;
                 } else {
@@ -50,7 +50,7 @@ bool giveRoad(int x, int y, int width, int height) {
                 }
                 break;
             case 'A':
-                if (pos.y - 1 < 0 || clone[pos.x][pos.y-1] == 'X'|| clone[pos.x][pos.y-1] == 'P') {
+                if (pos.y - 1 < 0 || cl[pos.x][pos.y-1] == 'X'|| cl[pos.x][pos.y-1] == 'P') {
 
                     return false;
                 } else {
@@ -79,10 +79,10 @@ int main (void) {
             mat[j] = new char[width];
         }
 
-        clone = new char*[height];
+        cl = new char*[height];
         for(int j = 0 ; j < height ; ++j)
         {
-            clone[j] = new char[width];
+            cl[j] = new char[width];
         }
 
         for(int j = 0 ; j < height ; ++j)
@@ -120,27 +120,28 @@ int main (void) {
                 {
                     for (int t = 0; t < width; t++)
                     {
-                        clone[p][t] = mat[p][t];
+                        cl[p][t] = mat[p][t];
                     }
                 }
-                if(clone[j][k] != 'X')
+                if(cl[j][k] != 'X')
                 {
                     if(giveRoad(j, k, width, height))
                     {
                         bool altu = true;
-                        clone[height-1][width-1] = 'P';
+                        cl[height-1][width-1] = 'P';
 
                         for(int p = 0 ; p < height ; p++)
                         {
                             for(int t = 0 ; t < width ; t++)
                             {
-                                if(clone[p][t] == '.')
+                                if(cl[p][t] == '.')
                                     altu = false;
                             }
                         }
 
                         if(altu)
                         {
+                            out<<"VALID"<<endl;
                             cout<<"VALID"<<endl;
                             j = height-1;
                             k = width-1;
@@ -150,20 +151,16 @@ int main (void) {
                 }
             }
         }
-        if(exista)cout<<"INVALID"<<endl;
-
-
-
-
-
-
-
+        if(exista){
+            cout<<"INVALID"<<endl;
+            out<<"INVALID"<<endl;
+        }
         for (int j = 0; j < height; ++j) {
             delete[] mat[j];
-            delete[] clone[j];
+            delete[] cl[j];
         }
         delete[] mat;
-        delete[] clone;
+        delete[] cl;
 
     }
 }
