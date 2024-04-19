@@ -17,7 +17,7 @@ struct Vec2 {
 //pos.y = 0
 
 int main (void) {
-    int N, dist1, dist2;
+    int N, w, h;
     string row;
     in >> N;
     for (int i = 0; i < N; ++i) {
@@ -44,23 +44,23 @@ int main (void) {
                     exit(EXIT_FAILURE);
                 }
             }
-            if (pos.x < mn.x) {
-                mn.x = pos.x;
-            }
-            if (pos.x > mx.x) {
-                mx.x = pos.x;
-            }
-            if (pos.y < mn.y) {
-                mn.y = pos.y;
-            }
-            if (pos.y > mx.y) {
-                mx.y = pos.y;
-            }
-            dist1 = abs(mn.y-mx.y);
-            dist2 = abs(mn.x-mx.x);
-            cout << dist1 << " " << dist2 << endl;
-            break;
         }
+        if (pos.x < mn.x) {
+            mn.x = pos.x;
+        }
+        if (pos.x > mx.x) {
+            mx.x = pos.x;
+        }
+        if (pos.y < mn.y) {
+            mn.y = pos.y;
+        }
+        if (pos.y > mx.y) {
+            mx.y = pos.y;
+        }
+        w = mx.x - mn.x+1;
+        h = mx.y - mn.y+1;
+        cout << w << " " << h << endl;
+        out << w << " " << h << endl;
     }
     return 0;
 }
