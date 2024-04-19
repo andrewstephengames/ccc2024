@@ -9,7 +9,7 @@ struct Vec2 {
 } pos;
 
 int N, w, h;
-char **mat;
+char **mat, **clone;
 string path;
 bool exista = true;
 
@@ -23,9 +23,9 @@ void giveRoad(int x, int y) { // dont translate into romanian
 
     for (int i = 0; i < path.length(); ++i) {
 
-        if(mat[pos.x][pos.y] == '.' && mat[pos.x][pos.y] != 'P')
+        if(clone[pos.x][pos.y] == '.' && clone[pos.x][pos.y] != 'P')
         {
-            mat[pos.x][pos.y] = 'P';
+            clone[pos.x][pos.y] = 'P';
 
             switch (path.at(i)) {
                 case 'W': {
@@ -68,6 +68,12 @@ int main (void) {
             mat[j] = new char[width];
         }
 
+        clone == new char*[height];
+        for(int j = 0 ; j < height ; ++j)
+        {
+            clone[j] = new char[width];
+        }
+
         for(int j = 0 ; j < height ; ++j)
         {
             for(int k = 0 ; k < width ; ++k)
@@ -96,7 +102,17 @@ int main (void) {
         {
             for(int k = 0 ; k < width ; k++)
             {
-                giveRoad(j,k);
+                /*
+                for(int p = 0 ; p < height ; p++)
+                {
+                    for(int t = 0 ; t < width ; t++)
+                    {
+                        clone[p][t] = mat[p][t];
+                    }
+                } */
+
+
+                //giveRoad(j,k);
             }
         }
         if(exista)cout<<"VALID"<<endl<<endl;
