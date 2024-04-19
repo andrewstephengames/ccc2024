@@ -9,7 +9,7 @@ struct Vec2 {
 } pos;
 
 int N, w, h;
-char **mat, **cl;
+char **mat;
 string path;
 bool exista = true;
 
@@ -23,22 +23,46 @@ void giveRoad(int x, int y) { // dont translate into romanian
 
     for (int i = 0; i < path.length(); ++i) {
 
-        if(cl[pos.x][pos.y] == '.' && cl[pos.x][pos.y] != 'P')
+        if(mat[pos.x][pos.y] == '.' && mat[pos.x][pos.y] != '0')
         {
-            cl[pos.x][pos.y] = 'P';
+            mat[pos.x][pos.y] = '0';
 
             switch (path.at(i)) {
                 case 'W': {
-                    pos.y++;
+                    if(mat[pos.x][pos.y + 1] == 'X' || mat[pos.x][pos.y + 1] == '0'){
+                        cout << "INVALID";
+                        return;
+                    }
+                    else{
+                        pos.y++;
+                    }
                 } break;
                 case 'D': {
-                    pos.x++;
+                    if(mat[pos.x + 1][pos.y] == 'X' || mat[pos.x + 1][pos.y] == '0'){
+                        cout << "INVALID";
+                        return;
+                    }
+                    else{
+                        pos.x++;
+                    }
                 } break;
                 case 'S': {
-                    pos.y--;
+                    if(mat[pos.x][pos.y - 1] == 'X' || mat[pos.x][pos.y - 1] == '0'){
+                        cout << "INVALID";
+                        return;
+                    }
+                    else{
+                        pos.y--;
+                    }
                 } break;
                 case 'A': {
-                    pos.x--;
+                    if(mat[pos.x - 1][pos.y] == 'X' || mat[pos.x - 1][pos.y] == '0'){
+                        cout << "INVALID";
+                        return;
+                    }
+                    else{
+                        pos.x--;
+                    }
                 } break;
                 default: {
                     cerr << "Unreachable\n";
@@ -68,12 +92,6 @@ int main (void) {
             mat[j] = new char[width];
         }
 
-        cl = new char*[height];
-        for(int j = 0 ; j < height ; ++j)
-        {
-            cl[j] = new char[width];
-        }
-
         for(int j = 0 ; j < height ; ++j)
         {
             for(int k = 0 ; k < width ; ++k)
@@ -82,11 +100,10 @@ int main (void) {
             }
         }
 
-
         in >> path;
 
 
-        cout<<width<<" "<<height<<endl;
+        cout<<w<<" "<<h<<endl;
         for(int j = 0 ; j < height ; ++j)
         {
             for(int k = 0 ; k < width ; ++k)
@@ -96,27 +113,6 @@ int main (void) {
         }
         cout<<path;
 
-        cout<<endl;
-
-        for(int j = 0 ; j < height ; j++)
-        {
-            for(int k = 0 ; k < width ; k++)
-            {
-                /*
-                for(int p = 0 ; p < height ; p++)
-                {
-                    for(int t = 0 ; t < width ; t++)
-                    {
-                        cl[p][t] = mat[p][t];
-                    }
-                } */
-
-
-                //giveRoad(j,k);
-            }
-        }
-        if(exista)cout<<"VALID"<<endl<<endl;
-        else cout<<"INVALID"<<endl<<endl;
-
+        cout<<endl<<endl;
     }
 }

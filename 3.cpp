@@ -9,17 +9,20 @@ struct Vec2 {
 } pos;
 
 int N, w, h;
-char **mat;
+char *mat;
 string path;
 
 ifstream in ("level3_example.out");
 ofstream out ("output3");
 
+queue<char> q;
+
 void giveRoad(int x, int y) { // dont translate into romanian
+    q.push(mat[x][y]);
     for (int i = 0; i < path.length(); ++i) {
         switch (path.at(i)) {
            case 'W': {
-                if (mat[x, y+1] == 'X')
+                if (mat[x][y+1] == 'X')
                     return;
            } break;
            case 'D': {
@@ -43,7 +46,8 @@ int main (void) {
     in >> N;
     for (int i = 0; i < N; ++i) {
         in >> w >> h;
-        mat = new char[w+2][h+2];
+        mat = new char*[w];
+        for (int i = 0; i < w; ++i)
             for (int j = 1; j <= w; ++j) {
                 mat[j][h+1] = 'X';
                 mat[j][0] = 'X';
@@ -58,8 +62,10 @@ int main (void) {
                 }
             }
             in >> path;
-            for (int j = 0; j < path.length; ++j) {
+            for (int j = 0; j < path.length(); ++j) {
             }           
-        delete mat;
+            for (int j = 0; j < w; ++j) {
+                delete mat[];
+            }
     }
 }
