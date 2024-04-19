@@ -3,18 +3,19 @@
 
 using namespace std;
 
-ifstream in ("level1_example.in");
-ofstream out ("output");
+ifstream in ("level1_5.in");
+ofstream out ("output1_5");
 
 int f[128];
 
 int main (void) {
     int N;
     string path;
+    in >> N;
     for (int i = 0; i < N; ++i) {
         in >> path;
-        for (int i = 0; i < 128; ++i) {
-            f[i] = 0;
+        for (int j = 0; j < 128; ++j) {
+            f[j] = 0;
         }
         for (int j = 0; j < path.length(); ++j) {
             if (path.at(j) == 'W') {
