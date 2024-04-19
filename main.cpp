@@ -65,7 +65,7 @@ int main (void) {
         mat = new char*[height];
         for(int j = 0 ; j < height ; ++j)
         {
-            mat[i] = new char[width];
+            mat[j] = new char[width];
         }
 
         for(int j = 0 ; j < height ; ++j)
@@ -76,10 +76,11 @@ int main (void) {
             }
         }
 
+
         in >> path;
 
 
-        cout<<w<<" "<<h<<endl;
+        cout<<width<<" "<<height<<endl;
         for(int j = 0 ; j < height ; ++j)
         {
             for(int k = 0 ; k < width ; ++k)
@@ -89,6 +90,17 @@ int main (void) {
         }
         cout<<path;
 
-        cout<<endl<<endl;
+        cout<<endl;
+
+        for(int j = 0 ; j < height ; j++)
+        {
+            for(int k = 0 ; k < width ; k++)
+            {
+                giveRoad(j,k);
+            }
+        }
+        if(exista)cout<<"VALID"<<endl<<endl;
+        else cout<<"INVALID"<<endl<<endl;
+
     }
 }
