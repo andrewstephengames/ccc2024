@@ -5,8 +5,8 @@
 
 using namespace std;
 
-ifstream in ("level2_example.in");
-ofstream out ("output2");
+ifstream in ("level2_5.in");
+ofstream out ("output2_5");
 
 pair<int, int> calculateLawnSize(const string& path) {
     int x = 0, y = 0;
