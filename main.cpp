@@ -24,7 +24,6 @@ bool giveRoad(int x, int y, int width, int height) {
         char current = path.at(i);
 
         clone[pos.x][pos.y] = 'P';
-        //cout<<pos.x<<" "<<pos.y<<" "<<path.at(i)<<endl;
 
         switch (current) {
             case 'W':
@@ -124,29 +123,30 @@ int main (void) {
                         clone[p][t] = mat[p][t];
                     }
                 }
-
-                if(giveRoad(j, k, width, height))
+                if(clone[j][k] != 'X')
                 {
-                    bool altu = true;
-                    clone[height-1][width-1] = 'P';
-
-                    for(int p = 0 ; p < height ; p++)
+                    if(giveRoad(j, k, width, height))
                     {
-                        for(int t = 0 ; t < width ; t++)
+                        bool altu = true;
+                        clone[height-1][width-1] = 'P';
+
+                        for(int p = 0 ; p < height ; p++)
                         {
-                            if(clone[p][t] == '.')
-                                altu = false;
+                            for(int t = 0 ; t < width ; t++)
+                            {
+                                if(clone[p][t] == '.')
+                                    altu = false;
+                            }
+                        }
+
+                        if(altu)
+                        {
+                            cout<<"VALID"<<endl;
+                            j = height-1;
+                            k = width-1;
+                            exista = false;
                         }
                     }
-
-                    if(altu)
-                    {
-                        cout<<"VALID"<<endl;
-                        j = height-1;
-                        k = width-1;
-                        exista = false;
-                    }
-
                 }
             }
         }
