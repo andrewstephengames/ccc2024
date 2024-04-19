@@ -57,46 +57,38 @@ void giveRoad(int x, int y) { // dont translate into romanian
 
 int main (void) {
     in >> N;
+    int width, height;
+    for(int i = 1 ; i <= N ; i++)
+    {
+        in >> width >> height;
 
-    for (int i = 0; i < N; ++i) {
-        in >> w >> h;
-        const int height = h+2;
-        const int width = w+2;
-
-
-        mat = new char*[width];
-        for(int i = 0; i <  width ; ++i)
+        mat = new char*[height];
+        for(int j = 0 ; j < height ; ++j)
         {
-            mat[i] = new char[height];
+            mat[i] = new char[width];
         }
 
-
-            for (int j = 1; j <= w; ++j) {
-                mat[j][h+1] = 'X';
-                mat[j][0] = 'X';
-            }
-            for (int j = 1; j <= h; ++j) {
-                mat[w+1][j] = 'X';
-                mat[0][j] = 'X';
-            }
-            for (int j = 1; j <= w; ++j) {
-                for (int k = 1; k <= h; ++j) {
-                    in >> mat[j][k];
-                }
-            }
-            in >> path;
-
-        exista = true;
-        for(int j = 1 ; j <= w ; ++j)
+        for(int j = 0 ; j < height ; ++j)
         {
-            for(int k = 1 ; k <= h ; ++k)
+            for(int k = 0 ; k < width ; ++k)
             {
-                giveRoad(j,k);
-                if(exista == false)cout<<"INVALID";
+                in >> mat[j][k];
             }
         }
-        if(exista)cout<<"VALID";
 
-        delete mat;
+        in >> path;
+
+
+        cout<<w<<" "<<h<<endl;
+        for(int j = 0 ; j < height ; ++j)
+        {
+            for(int k = 0 ; k < width ; ++k)
+                cout<<mat[j][k]<<" ";
+
+            cout<<endl;
+        }
+        cout<<path;
+
+        cout<<endl<<endl;
     }
 }
