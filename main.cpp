@@ -8,51 +8,63 @@ struct Vec2 {
     int x, y;
 } pos;
 
-int N, w, h;
-char **mat, **cl;
+int N;
+char **mat, **clone;
 string path;
 bool exista = true;
 
 ifstream in ("level3_example.in");
 ofstream out ("output3");
 
-void giveRoad(int x, int y) { // dont translate into romanian
-
+bool giveRoad(int x, int y, int width, int height) {
     pos.x = x;
     pos.y = y;
 
     for (int i = 0; i < path.length(); ++i) {
+        char current = path.at(i);
 
-        if(cl[pos.x][pos.y] == '.' && cl[pos.x][pos.y] != 'P')
-        {
-            cl[pos.x][pos.y] = 'P';
+        clone[pos.x][pos.y] = 'P';
+        //cout<<pos.x<<" "<<pos.y<<" "<<path.at(i)<<endl;
 
-            switch (path.at(i)) {
-                case 'W': {
-                    pos.y++;
-                } break;
-                case 'D': {
-                    pos.x++;
-                } break;
-                case 'S': {
-                    pos.y--;
-                } break;
-                case 'A': {
+        switch (current) {
+            case 'W':
+                if (pos.x - 1 < 0 || clone[pos.x-1][pos.y] == 'X' || clone[pos.x-1][pos.y] == 'P') {
+                    return false;
+                } else {
                     pos.x--;
-                } break;
-                default: {
-                    cerr << "Unreachable\n";
-                    exit(EXIT_FAILURE);
                 }
-            }
-        }
-        else
-        {
-            exista = false;
-            return;
+                break;
+            case 'D':
+                if (pos.y + 1 >= width || clone[pos.x][pos.y+1] == 'X' || clone[pos.x][pos.y+1] == 'P') {
+
+                    return false;
+                } else {
+                    pos.y++;
+                }
+                break;
+            case 'S':
+                if (pos.x + 1 >= height || clone[pos.x+1][pos.y] == 'X' || clone[pos.x+1][pos.y] == 'P') {
+
+                    return false;
+                } else {
+                    pos.x++;
+                }
+                break;
+            case 'A':
+                if (pos.y - 1 < 0 || clone[pos.x][pos.y-1] == 'X'|| clone[pos.x][pos.y-1] == 'P') {
+
+                    return false;
+                } else {
+                    pos.y--;
+                }
+                break;
+            default:
+                cerr << "Unreachable\n";
+                exit(EXIT_FAILURE);
         }
     }
 
+    return true;
 }
 
 int main (void) {
@@ -68,10 +80,10 @@ int main (void) {
             mat[j] = new char[width];
         }
 
-        cl = new char*[height];
+        clone = new char*[height];
         for(int j = 0 ; j < height ; ++j)
         {
-            cl[j] = new char[width];
+            clone[j] = new char[width];
         }
 
         for(int j = 0 ; j < height ; ++j)
@@ -86,7 +98,7 @@ int main (void) {
         in >> path;
 
 
-        cout<<width<<" "<<height<<endl;
+       /* cout<<width<<" "<<height<<endl;
         for(int j = 0 ; j < height ; ++j)
         {
             for(int k = 0 ; k < width ; ++k)
@@ -96,27 +108,62 @@ int main (void) {
         }
         cout<<path;
 
-        cout<<endl;
+        cout<<endl; */
 
-        for(int j = 0 ; j < height ; j++)
+
+
+        bool exista = true;
+        for(int j = 0; j < height; j++)
         {
-            for(int k = 0 ; k < width ; k++)
+            for (int k = 0; k < width; k++)
             {
-                /*
-                for(int p = 0 ; p < height ; p++)
+                for (int p = 0; p < height; p++)
                 {
-                    for(int t = 0 ; t < width ; t++)
+                    for (int t = 0; t < width; t++)
                     {
-                        cl[p][t] = mat[p][t];
+                        clone[p][t] = mat[p][t];
                     }
-                } */
+                }
 
+                if(giveRoad(j, k, width, height))
+                {
+                    bool altu = true;
+                    clone[height-1][width-1] = 'P';
 
-                //giveRoad(j,k);
+                    for(int p = 0 ; p < height ; p++)
+                    {
+                        for(int t = 0 ; t < width ; t++)
+                        {
+                            if(clone[p][t] == '.')
+                                altu = false;
+                        }
+                    }
+
+                    if(altu)
+                    {
+                        cout<<"VALID"<<endl;
+                        j = height-1;
+                        k = width-1;
+                        exista = false;
+                    }
+
+                }
             }
         }
-        if(exista)cout<<"VALID"<<endl<<endl;
-        else cout<<"INVALID"<<endl<<endl;
+        if(exista)cout<<"INVALID"<<endl;
+
+
+
+
+
+
+
+        for (int j = 0; j < height; ++j) {
+            delete[] mat[j];
+            delete[] clone[j];
+        }
+        delete[] mat;
+        delete[] clone;
 
     }
 }
